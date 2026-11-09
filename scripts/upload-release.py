@@ -197,6 +197,7 @@ def main():
     p.add_argument("--branch", default="main")
     p.add_argument("--assets", default=str(ROOT / "assets"))
     p.add_argument("--only", default="", help="只上传指定文件名（逗号分隔），默认上传 assets/ 内全部")
+    p.add_argument("--notes", default="RELEASE_NOTES.md", help="Release 正文所用的 md 文件（相对仓库根）")
     p.add_argument("--dry-run", action="store_true")
     p.add_argument("--skip-push", action="store_true")
     a = p.parse_args()
@@ -311,7 +312,10 @@ def main():
         rel = body
         ok(f"Release 已存在 (id={rel['id']})")
     else:
-        notes = (ROOT / "RELEASE_NOTES.md").read_text(encoding="utf-8")
+        notes_path = ROOT / a.notes
+        if not notes_path.is_file():
+            die(f"发布说明文件不存在: {notes_path}")
+        notes = notes_path.read_text(encoding="utf-8")
         notes = notes.replace("{{OWNER}}", owner).replace("{{REPO}}", a.repo).replace("{{TAG}}", a.tag)
         log("创建 Release ...")
         st, body = api(
