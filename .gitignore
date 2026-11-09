@@ -1,0 +1,14 @@
+# 镜像文件（约 1.1GB）不入库，统一走 Release 附件
+assets/
+
+# token 临时文件
+scripts/.token
+.token
+
+# 下载缓存
+*.part
+*.tmp
+
+# python
+__pycache__/
+*.pyc
