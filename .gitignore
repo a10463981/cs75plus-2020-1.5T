@@ -12,3 +12,4 @@ scripts/.token
 # python
 __pycache__/
 *.pyc
+scripts/.gitee_token
