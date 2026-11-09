@@ -171,7 +171,7 @@ def main():
     ap.add_argument("--owner", default="")
     ap.add_argument("--repo", default="cs75plus-2020-1.5T")
     ap.add_argument("--tag", default="v1.0.0")
-    ap.add_argument("--title", default="CS75PLUS 2020款 1.5T 车机系统镜像 v1.0.0 (S311-WT)")
+    ap.add_argument("--title", default="CS75PLUS 2020款（1.5T / 2.0T）车机系统镜像 v1.0.0 (S311-WT)")
     ap.add_argument("--branch", default="main")
     ap.add_argument("--assets", default=str(ROOT / "assets"))
     ap.add_argument("--only", default="")
@@ -208,8 +208,7 @@ def main():
         log("创建仓库 ...")
         st, body = gapi("POST", "/user/repos", body={
             "name": a.repo,
-            "description": "长安 CS75PLUS 2020款 1.5T 车机系统镜像备份库 (S311-WT) — 镜像包通过 Release 下载",
-            "private": "false",
+            "description": "长安 CS75PLUS 2020款（1.5T / 2.0T）车机系统镜像备份库 (S311-WT) — 镜像包通过 Release 下载",
             "auto_init": "false",
             "has_issues": "true",
             "has_wiki": "false",
@@ -217,6 +216,18 @@ def main():
         if st not in (200, 201):
             die(f"创建仓库失败: HTTP {st} {explain(body)}")
         ok(f"仓库已创建: {body.get('html_url')}")
+
+    # Gitee 建库时传 "false" 会被当成 true，这里显式钉死为公开，否则匿名下载 403
+    st, cur = gapi("GET", f"/repos/{owner}/{a.repo}")
+    if isinstance(cur, dict) and cur.get("private"):
+        warn("仓库当前为私有，正在改为公开 ...")
+        st2, b2 = gapi("PATCH", f"/repos/{owner}/{a.repo}",
+                       body={"name": a.repo, "private": "false"})
+        if st2 != 200:
+            die(f"改为公开失败: HTTP {st2} {explain(b2)}")
+        ok("仓库已设为公开")
+    else:
+        ok("仓库可见性: 公开")
 
     # 推送文档
     if a.skip_push:

@@ -1,8 +1,8 @@
-# CS75PLUS 2020款 1.5T 车机镜像校验表 (S311-WT / CoagentUpgrade)
+# CS75PLUS 2020款（1.5T / 2.0T）车机镜像校验表 (S311-WT / CoagentUpgrade)
 # 生成时间: 2026-11-09
 # 用法: md5sum -c MD5SUMS.txt  (Linux) / certutil -hashfile <文件> MD5  (Windows)
 
-# ① 原厂整包（Release 主下载，1.10 GiB）
+# ① 原厂整包（GitHub Release 主下载，1.10 GiB）
 #    SHA256: 187939a54fde57c08ffc58cbb5fc750a2fed59511d874e7ff24ea716f139896f
 659985d992dcfc64705771f8eb093aff  OS_S311-WT-V8_V00.98.00-191227.zip
 
@@ -13,3 +13,6 @@ ead3557546d0811b823dfb496298aca1  tbox-os.tar.gz
 b05b97dc59c47da16c864d09d7d07060  tbox-bsp.tar.gz
 5f5aba5ce584e5a517eac02eaf2b55b0  tbox-app.tar.gz
 5d12c4c2541171924f1bcb15d1db20bf  wecarspeech.zip
+
+# ③ Gitee 分卷（update.zip 按 96MB 切分，合并后 MD5 见 ② update.zip）
+#    合并: cat update.zip.00* > update.zip

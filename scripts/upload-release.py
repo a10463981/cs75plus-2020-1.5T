@@ -193,7 +193,7 @@ def main():
     p.add_argument("--owner", default="", help="仓库所属用户（默认取 token 对应账号）")
     p.add_argument("--repo", default="cs75plus-2020-1.5T")
     p.add_argument("--tag", default="v1.0.0")
-    p.add_argument("--title", default="CS75PLUS 2020款 1.5T 车机系统镜像 v1.0.0 (S311-WT)")
+    p.add_argument("--title", default="CS75PLUS 2020款（1.5T / 2.0T）车机系统镜像 v1.0.0 (S311-WT)")
     p.add_argument("--branch", default="main")
     p.add_argument("--assets", default=str(ROOT / "assets"))
     p.add_argument("--only", default="", help="只上传指定文件名（逗号分隔），默认上传 assets/ 内全部")
@@ -263,7 +263,7 @@ def main():
             "/user/repos",
             {
                 "name": a.repo,
-                "description": "长安 CS75PLUS 2020款 1.5T 车机系统镜像备份库 (S311-WT) — 镜像包通过 Release 下载",
+                "description": "长安 CS75PLUS 2020款（1.5T / 2.0T）车机系统镜像备份库 (S311-WT) — 镜像包通过 Release 下载",
                 "private": False,
                 "has_issues": True,
                 "has_wiki": False,
