@@ -59,7 +59,7 @@ copy /b update.zip.000+update.zip.001+update.zip.002+update.zip.003+update.zip.0
 - **`2019/12/12 [S401]` APP 5.67s**：同上（S401 分支）
 - `2019/11/29` APP 5.65s：解决大数据开启时远程开空调超时未反馈 TSP；支持 8/1、8/2、8/3 压缩 tlv
 
-> 完整历史（含 OS / BSP / APP 逐条变更）见 [TBOX 历史发版记录](https://gitee.com/a10463981/cs75plus-2020-1.5T/blob/main/docs/TBOX-发版记录.md)。
+> 本版完整的 TBOX 发版记录（原厂原文 + 逐条修复分析）见 [TBOX-发版记录-191227.md](https://gitee.com/a10463981/cs75plus-2020-1.5T/blob/main/docs/TBOX-发版记录-191227.md)。
 
 ### 📥 刷机步骤
 
@@ -76,7 +76,8 @@ copy /b update.zip.000+update.zip.001+update.zip.002+update.zip.003+update.zip.0
 | [刷机与升级说明](https://gitee.com/a10463981/cs75plus-2020-1.5T/blob/main/docs/刷机与升级说明.md) | U 盘结构、升级步骤、工程模式、常见故障排查 |
 | [MD5 校验表](https://gitee.com/a10463981/cs75plus-2020-1.5T/blob/main/MD5SUMS.txt) | 全部镜像与组件的校验值 |
 | [版本清单](https://gitee.com/a10463981/cs75plus-2020-1.5T/blob/main/docs/版本清单.md) | 4 个版本的新旧、补丁/完整判定、组件差异、该刷哪个 |
-| [TBOX 历史发版记录](https://gitee.com/a10463981/cs75plus-2020-1.5T/blob/main/docs/TBOX-发版记录.md) | 原厂 TBOX 全量发版说明（2019-04 ~ 2019-12） |
+| [本版 TBOX 发版记录](https://gitee.com/a10463981/cs75plus-2020-1.5T/blob/main/docs/TBOX-发版记录-191227.md) | 本版自带的原厂 TBOX 原文 + 修复/遗留问题分析 |
+| [TBOX 总索引（版本对照）](https://gitee.com/a10463981/cs75plus-2020-1.5T/blob/main/docs/TBOX-发版记录.md) | 4 个版本的 TBOX 演进时间线与对比 |
 
 ### ⚠️ 适用与风险
 
