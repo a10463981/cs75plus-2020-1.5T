@@ -242,9 +242,9 @@ def main():
             die("git 推送失败:\n  " + "\n  ".join((r.stderr or r.stdout).strip().splitlines()[-4:]))
         ok("文档已推送")
 
-    # Release
+    # Release（Gitee 在 release 不存在时返回 200 + null，需显式判空）
     st, body = gapi("GET", f"/repos/{owner}/{a.repo}/releases/tags/{a.tag}")
-    if st == 200:
+    if st == 200 and isinstance(body, dict) and body.get("id"):
         rel = body
         ok(f"Release 已存在 (id={rel['id']})")
     else:
