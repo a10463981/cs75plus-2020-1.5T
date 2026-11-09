@@ -18,28 +18,62 @@
 
 ## ⬇️ 下载
 
-前往 **[Releases](../../releases/latest)** 页面下载。
+本仓库双平台镜像，**国内用户建议走 Gitee**（速度更快）：
 
-### ① 原厂整包（推荐，一个文件搞定）
+| 平台 | 提供的内容 | Release 下载页 |
+|---|---|---|
+| 🟢 **Gitee（国内推荐）** | OS 系统包 **10 个分卷** + MCU + TBOX(bsp/app) | https://gitee.com/a10463981/cs75plus-2020-1.5T/releases/latest |
+| ⚫ GitHub（完整） | 原厂整包 **1.10 GiB 单文件** + 全组件 | https://github.com/a10463981/cs75plus-2020-1.5T/releases/latest |
+
+> ⚠️ **为什么 Gitee 是分卷？** Gitee 免费仓库限制「单个附件 ≤ 100MB、单仓库附件总量 ≤ 1GB」，1.10 GiB 的整包无法整体上传。因此 Gitee 侧把 OS 系统包拆成 10 个 96MB 分卷（合并后与原包**逐字节一致**，MD5 `e4751da5f1f7ec31f85332dce422573b`）；`tbox-os.tar.gz` 与 `wecarspeech.zip` 受配额限制仅 GitHub 提供。
+
+### ① 原厂整包（GitHub，一个文件搞定）
 
 | 文件 | 大小 | MD5 | SHA256 |
 |---|---|---|---|
-| [`OS_S311-WT-V8_V00.98.00-191227.zip`](../../releases/latest) | 1.10 GiB | `659985d992dcfc64705771f8eb093aff` | `187939a54fde57c08ffc58cbb5fc750a2fed59511d874e7ff24ea716f139896f` |
+| [`OS_S311-WT-V8_V00.98.00-191227.zip`](https://github.com/a10463981/cs75plus-2020-1.5T/releases/latest) | 1.10 GiB | `659985d992dcfc64705771f8eb093aff` | `187939a54fde57c08ffc58cbb5fc750a2fed59511d874e7ff24ea716f139896f` |
 
 解压后得到完整的 `CoagentUpgrade/` 目录（含 MD5 校验文件与版本说明），**直接把整个 `CoagentUpgrade` 文件夹拷到 U 盘根目录**即可刷机，无需自行拼装。
 
 > 包内附带 `__MACOSX/` 目录是 macOS 打包残留，可忽略/删除，不影响升级。
 
-### ② 包内文件清单（整包已含，无需单独下载）
+### ② Gitee 分卷合并（合并后即为 `CoagentUpgrade/Os/update.zip`）
 
-| 文件 | 组件 | 大小 | MD5 |
-|---|---|---|---|
-| `CoagentUpgrade/Os/update.zip` | **系统 OS 镜像**（核心） | 956 MB | `e4751da5f1f7ec31f85332dce422573b` |
-| `CoagentUpgrade/Mcu/McuAppUpdate.img` | MCU 固件 | 470 KB | `6007ec4ddd5d398c10ae9bdb66f9608d` |
-| `CoagentUpgrade/Tbox/tbox-os.tar.gz` | TBOX 系统 | 95.5 MB | `ead3557546d0811b823dfb496298aca1` |
-| `CoagentUpgrade/Tbox/tbox-bsp.tar.gz` | TBOX BSP | 5.5 MB | `b05b97dc59c47da16c864d09d7d07060` |
-| `CoagentUpgrade/Tbox/tbox-app.tar.gz` | TBOX 应用 | 393 KB | `5f5aba5ce584e5a517eac02eaf2b55b0` |
-| `CoagentUpgrade/SoundData/wecarspeech.zip` | 讯飞语音数据包 | 67 MB | `5d12c4c2541171924f1bcb15d1db20bf` |
+先下载 `update.zip.000` ~ `update.zip.009` 共 10 个文件到**同一目录**，然后合并：
+
+```bash
+# Linux / macOS
+cat update.zip.000 update.zip.001 update.zip.002 update.zip.003 update.zip.004 \
+    update.zip.005 update.zip.006 update.zip.007 update.zip.008 update.zip.009 > update.zip
+md5sum update.zip     # 必须是 e4751da5f1f7ec31f85332dce422573b
+```
+
+```bat
+:: Windows CMD（注意按 000→009 顺序写全）
+copy /b update.zip.000+update.zip.001+update.zip.002+update.zip.003+update.zip.004+update.zip.005+update.zip.006+update.zip.007+update.zip.008+update.zip.009 update.zip
+certutil -hashfile update.zip MD5
+```
+
+```powershell
+# Windows PowerShell
+$parts = 0..9 | ForEach-Object { "update.zip.{0:D3}" -f $_ }
+$out = [IO.File]::Create("$PWD\update.zip")
+$parts | ForEach-Object { $in = [IO.File]::OpenRead("$PWD\$_"); $in.CopyTo($out); $in.Close() }
+$out.Close()
+```
+
+**更省事的办法**：用 7-Zip 右键 `update.zip.000` → `7-Zip` → `提取到当前文件夹`，它会自动按顺序合并并解压出 `update.zip`。
+
+### ③ 包内文件清单（整包已含，无需单独下载）
+
+| 文件 | 组件 | 大小 | MD5 | Gitee 是否有 |
+|---|---|---|---|---|
+| `CoagentUpgrade/Os/update.zip` | **系统 OS 镜像**（核心） | 956 MB | `e4751da5f1f7ec31f85332dce422573b` | ✅ 分卷 000~009 |
+| `CoagentUpgrade/Mcu/McuAppUpdate.img` | MCU 固件 | 470 KB | `6007ec4ddd5d398c10ae9bdb66f9608d` | ✅ |
+| `CoagentUpgrade/Tbox/tbox-os.tar.gz` | TBOX 系统 | 95.5 MB | `ead3557546d0811b823dfb496298aca1` | ❌ 额度不足 |
+| `CoagentUpgrade/Tbox/tbox-bsp.tar.gz` | TBOX BSP | 5.5 MB | `b05b97dc59c47da16c864d09d7d07060` | ✅ |
+| `CoagentUpgrade/Tbox/tbox-app.tar.gz` | TBOX 应用 | 393 KB | `5f5aba5ce584e5a517eac02eaf2b55b0` | ✅ |
+| `CoagentUpgrade/SoundData/wecarspeech.zip` | 讯飞语音数据包 | 67 MB | `5d12c4c2541171924f1bcb15d1db20bf` | ❌ 额度不足 |
 
 完整校验表见 [`MD5SUMS.txt`](MD5SUMS.txt)。
 

@@ -248,9 +248,11 @@ def main():
         rel = body
         ok(f"Release 已存在 (id={rel['id']})")
     else:
-        notes = (ROOT / "RELEASE_NOTES.md").read_text(encoding="utf-8")
+        notes_file = ROOT / "RELEASE_NOTES.gitee.md"
+        if not notes_file.is_file():
+            notes_file = ROOT / "RELEASE_NOTES.md"
+        notes = notes_file.read_text(encoding="utf-8")
         notes = notes.replace("{{OWNER}}", owner).replace("{{REPO}}", a.repo).replace("{{TAG}}", a.tag)
-        notes = notes.replace("github.com", "gitee.com")
         log("创建 Release ...")
         st, body = gapi("POST", f"/repos/{owner}/{a.repo}/releases", body={
             "tag_name": a.tag, "name": a.title, "body": notes,

@@ -13,3 +13,7 @@ scripts/.token
 __pycache__/
 *.pyc
 scripts/.gitee_token
+
+# 探测/临时文件
+.probe_*
+*.part.bin
