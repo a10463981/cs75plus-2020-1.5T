@@ -42,15 +42,25 @@
 
 本仓库双平台镜像，**国内用户建议走 Gitee**（速度更快）：
 
-| 平台 | 提供的内容 | Release 下载页 |
+| 平台 | 提供的内容 | 入口 |
 |---|---|---|
-| 🟢 **Gitee** | ⚠️ **仅 1 个版本**：`v0.98.00-191227`（OS 10 个分卷 + MCU + TBOX bsp/app） | https://gitee.com/a10463981/cs75plus-2020-1.5T/releases/latest |
-| ⚫ **GitHub（全量）** | ✅ **全部 4 个版本**，每个都是完整原厂归档 | https://github.com/a10463981/cs75plus-2020-1.5T/releases |
+| 🟢 **Gitee（国内加速）** | **4 个版本分仓**（主库 + 3 个版本专用仓库），详见下表 | https://gitee.com/a10463981/cs75plus-2020-1.5T/releases/latest |
+| ⚫ **GitHub（全量）** | 全部 4 个版本，每个都是**完整原厂归档**（含语音包 / `tbox-os` 等超配额文件） | https://github.com/a10463981/cs75plus-2020-1.5T/releases |
 
-> ⚠️ **Gitee 为什么只有一个版本？** Gitee 免费仓库硬限制：**单个附件 ≤ 100MB、单仓库附件总量 ≤ 1GB**（[官方说明](https://help.gitee.com/repository/release/create)）。
-> `v0.98.00-191227` 的 OS 分卷 + 小件已经占用 **1,009,069,572 B ≈ 94% 配额**，剩余仅约 61 MiB；
-> 而其余三个版本的**单版本原厂归档本身就超过 1 GiB**（191016 `1,045.9 MiB`、200512 `1,095.4 MiB`），无法放进任何单个 Gitee 仓库。
-> 因此 Gitee 侧只能承载一个版本，**需要其余版本请走 GitHub**（或见下方「多仓库方案」）。
+### 🗂️ Gitee 分仓索引
+
+Gitee 免费仓库硬限制「**单个附件 ≤ 100MB、单仓库附件总量 ≤ 1GB**」（[官方说明](https://help.gitee.com/repository/release/create)），
+单个版本的原厂归档普遍超过 1 GiB，**放不进同一个仓库** —— 因此按版本分仓，每个仓库各自用满 1 GiB 额度：
+
+| 版本 | Gitee 仓库 | 本仓内容 | 配额占用 |
+|---|---|---|---|
+| `v0.98.00-191227` | [cs75plus-2020-1.5T](https://gitee.com/a10463981/cs75plus-2020-1.5T)（主库） | OS 10 分卷 + MCU + TBOX bsp/app | 962 MiB（94%） |
+| `v0.75.00-191016` | [cs75plus-2020-1.5T-191016](https://gitee.com/a10463981/cs75plus-2020-1.5T-191016) | OS 10 分卷 + MCU + TBOX os/bsp/app | 976 MiB（95%） |
+| `v1.09.00-200512` | [cs75plus-2020-1.5T-200512](https://gitee.com/a10463981/cs75plus-2020-1.5T-200512) | OS 11 分卷 + MCU + TBOX bsp/app | 999 MiB（98%） |
+| `v1.25.11-201025` | [cs75plus-2020-1.5T-201025](https://gitee.com/a10463981/cs75plus-2020-1.5T-201025) | **完整原厂 RAR** 11 分卷 + 说明书 PDF | 988 MiB（96%） |
+
+> 仍需注意：因单仓 1 GiB 上限，Gitee 侧每个版本**无法容纳全部组件**（例如 `wecarspeech.zip`、部分 `tbox-os.tar.gz`）。
+> 需要**逐字节完整的原厂归档**，请走 [GitHub Releases](https://github.com/a10463981/cs75plus-2020-1.5T/releases)。
 
 > ⚠️ **为什么 Gitee 是分卷？** Gitee 免费仓库限制「单个附件 ≤ 100MB、单仓库附件总量 ≤ 1GB」，1.10 GiB 的整包无法整体上传。因此 Gitee 侧把 OS 系统包拆成 10 个 96MB 分卷（合并后与原包**逐字节一致**，MD5 `e4751da5f1f7ec31f85332dce422573b`）；`tbox-os.tar.gz` 与 `wecarspeech.zip` 受配额限制仅 GitHub 提供。
 
